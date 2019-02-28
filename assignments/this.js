@@ -49,4 +49,3 @@ pointing.doing();
 // Principle 4
 
 // code example for Explicit Binding
-laughing.doing.call(pointing);

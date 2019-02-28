@@ -138,29 +138,41 @@ Humanoid.prototype.greet = function() {
 
   // Villain constructor
   function Villain(evilproperties) {
-    GameObject.call(this, evilproperties);
-    CharacterStats.call(this, evilproperties);
     Humanoid.call(this, evilproperties);
     this.damage = evilproperties.damage;
+    this.healthPoints = evilproperties.healthPoints;
   }
   Villain.prototype = Object.create(Humanoid.prototype);
   Villain.prototype.corrupt = function() {
-    return `${this.name} deals ${this.damage}!`;
+    hero.healthPoints -= this.damage;
+    if (hero.healthPoints <= 0) {
+      console.log(`${this.name} has slain ${hero.name}, darkness reigns supreme!`);
+      console.log(hero.destroy());
+    } else {
+    console.log(`${this.name} attacks for ${this.damage} damage. ${hero.name} has ${hero.healthPoints} health remaining.`);
+    }
   }
 
   // Hero constructor
   function Hero(goodproperties) {
-    GameObject.call(this, goodproperties);
-    CharacterStats.call(this, goodproperties);
     Humanoid.call(this, goodproperties);
     this.damage = goodproperties.damage;
+    this.healthPoints = goodproperties.healthPoints;
   }
   Hero.prototype = Object.create(Humanoid.prototype);
   Hero.prototype.smite = function() {
-    return `${this.name} deals ${this.damage}!`;
-  };
+    villain.healthPoints -= this.damage;
+    if (villain.healthPoints <= 0) {
+      console.log(`${this.name} has slain ${villain.name}, light and purity emerges victorious!`);
+      console.log(villain.destroy());
+    } else {
+    console.log(`${this.name} attacks for ${this.damage} damage. ${villain.name} has ${villain.healthPoints} health remaining.`);
+    }
+  }
+
   Hero.prototype.bless = function() {
-    return `${this.name} heals for ${this.damage}!`;
+    hero.healthPoints += this.damage;
+    console.log(`${this.name} heals for ${this.damage} health. ${hero.name} has ${hero.healthPoints} health remaining.`);
   }
 // Villain object
     const villain = new Villain({
@@ -203,9 +215,13 @@ Humanoid.prototype.greet = function() {
     console.log(villain.createdAt);
     console.log(hero.greet());
     console.log(villain.greet());
-    console.log(villain.corrupt());
-    console.log(hero.smite());
-    console.log(villain.corrupt());
-    console.log(hero.bless());
+    villain.corrupt();
+    hero.smite();
+    villain.corrupt();
+    hero.bless();
+    villain.corrupt();
+    hero.smite();
+    villain.corrupt();
+    hero.smite();
+    villain.corrupt();
     
-  
