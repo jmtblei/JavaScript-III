@@ -140,33 +140,30 @@ Humanoid.prototype.greet = function() {
   function Villain(evilproperties) {
     GameObject.call(this, evilproperties);
     CharacterStats.call(this, evilproperties);
-    Humanoid.call.this(this, evilproperties);
+    Humanoid.call(this, evilproperties);
     this.damage = evilproperties.damage;
   }
   Villain.prototype = Object.create(Humanoid.prototype);
-  Villain.prototype.Corrupt = function(hero) {
-    hero.healthPoints -= villain.damage;
-    return `${this.name} deals ${this.damage}!`
+  Villain.prototype.corrupt = function() {
+    return `${this.name} deals ${this.damage}!`;
   }
 
   // Hero constructor
   function Hero(goodproperties) {
     GameObject.call(this, goodproperties);
     CharacterStats.call(this, goodproperties);
-    Humanoid.call.this(this, goodproperties);
+    Humanoid.call(this, goodproperties);
     this.damage = goodproperties.damage;
   }
   Hero.prototype = Object.create(Humanoid.prototype);
-  Hero.prototype.Smite = function(villain) {
-    villain.healthPoints -= hero.damage;
-    return `${this.name} deals ${this.healthPoints}!`
+  Hero.prototype.smite = function() {
+    return `${this.name} deals ${this.damage}!`;
   };
-  Hero.prototype.Bless = function(hero) {
-    hero.healthPoints += hero.damage;
-    return `${this.name} heals for ${this.healthPoints}!`
+  Hero.prototype.bless = function() {
+    return `${this.name} heals for ${this.damage}!`;
   }
 // Villain object
-    const villain = new Humanoid({
+    const villain = new Villain({
     createdAt: new Date(),
     dimensions: {
       length: 6,
@@ -180,9 +177,10 @@ Humanoid.prototype.greet = function() {
         'Claymore',
       ],
       language: 'Wicked',
+      damage: 8,
     });
 // Hero object
-    const hero = new Humanoid({
+    const hero = new Hero({
       createdAt: new Date(),
       dimensions: {
         length: 5,
@@ -196,6 +194,7 @@ Humanoid.prototype.greet = function() {
           'Morning Star',
         ],
         language: 'Jovial',
+        damage: 10,
       });
 // Fight
 // console.log(hero);
@@ -204,6 +203,9 @@ Humanoid.prototype.greet = function() {
     console.log(villain.createdAt);
     console.log(hero.greet());
     console.log(villain.greet());
-    console.log(villain.Corrupt());
+    console.log(villain.corrupt());
+    console.log(hero.smite());
+    console.log(villain.corrupt());
+    console.log(hero.bless());
     
   
